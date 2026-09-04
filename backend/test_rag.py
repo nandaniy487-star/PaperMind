@@ -1,9 +1,8 @@
-from utils.pdf_processor import extract_text_from_pdf
-from utils.text_chunker import split_text
-from utils.embedding import generate_embeddings
-from utils.vector_store import store_embeddings, search_similar_chunks
-from rag_service import generate_answer
-
+from backend.utils.pdf_processor import extract_text_from_pdf
+from backend.utils.text_chunker import split_text
+from backend.utils.embedding import generate_embeddings
+from backend.utils.vector_store import store_embeddings, search_similar_chunks
+from backend.rag_service import generate_answer
 
 pdf_path = "backend/Research_Paper.pdf"
 

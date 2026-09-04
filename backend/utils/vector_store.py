@@ -1,4 +1,5 @@
 import chromadb
+import uuid
 
 
 client = chromadb.PersistentClient(path="backend/chroma_db")
@@ -10,11 +11,14 @@ collection = client.get_or_create_collection(
 
 
 def store_embeddings(chunks, embeddings):
+    ids = [str(uuid.uuid4()) for _ in chunks]
+
     collection.add(
         documents=chunks,
         embeddings=embeddings.tolist(),
-        ids=[str(i) for i in range(len(chunks))]
+        ids=ids
     )
+
 
 def search_similar_chunks(query_embedding, top_k=3):
     results = collection.query(
