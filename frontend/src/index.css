@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="dark"] {
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
@@ -12,6 +13,7 @@
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
+  --text-heading: #ffffff;
 
   --accent-indigo: #6366f1;
   --accent-violet: #8b5cf6;
@@ -22,7 +24,69 @@
   --gradient-text: linear-gradient(135deg, #a5b4fc 0%, #c084fc 50%, #f472b6 100%);
   --gradient-glow: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%);
 
+  --nav-bg: rgba(9, 13, 22, 0.85);
+  --badge-bg: rgba(30, 41, 59, 0.7);
+  --preview-card-bg: rgba(15, 23, 42, 0.85);
+  --card-header-bg: rgba(9, 13, 22, 0.6);
+  --query-bubble-bg: rgba(30, 41, 59, 0.5);
+  --ai-bubble-bg: rgba(22, 32, 56, 0.6);
+  --dropzone-bg: rgba(15, 23, 42, 0.4);
+  --dropzone-border: #334155;
+  --dropzone-hover-bg: rgba(99, 102, 241, 0.04);
+  --file-card-bg: rgba(22, 32, 56, 0.5);
+  --footer-bg: rgba(9, 13, 22, 0.95);
+  --btn-secondary-bg: rgba(30, 41, 59, 0.6);
+  --pipeline-bg: rgba(15, 23, 42, 0.5);
+  --shadow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --theme-toggle-bg: rgba(30, 41, 59, 0.7);
+  --theme-toggle-color: #f1f5f9;
+
   color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Color Palette - Clean Scholarly Light Theme */
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-glow: rgba(99, 102, 241, 0.2);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-heading: #0f172a;
+
+  --accent-indigo: #4f46e5;
+  --accent-violet: #7c3aed;
+  --accent-cyan: #0284c7;
+  --accent-emerald: #059669;
+
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #c026d3 100%);
+  --gradient-text: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
+  --gradient-glow: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.04) 45%, transparent 70%);
+
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --badge-bg: rgba(241, 245, 249, 0.95);
+  --preview-card-bg: #ffffff;
+  --card-header-bg: #f8fafc;
+  --query-bubble-bg: #f1f5f9;
+  --ai-bubble-bg: #f5f3ff;
+  --dropzone-bg: #f8fafc;
+  --dropzone-border: #cbd5e1;
+  --dropzone-hover-bg: rgba(99, 102, 241, 0.05);
+  --file-card-bg: #f8fafc;
+  --footer-bg: #f8fafc;
+  --btn-secondary-bg: #ffffff;
+  --pipeline-bg: #f8fafc;
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --theme-toggle-bg: #f1f5f9;
+  --theme-toggle-color: #334155;
+
+  color-scheme: light;
 }
 
 *, *::before, *::after {
@@ -44,6 +108,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 #root {

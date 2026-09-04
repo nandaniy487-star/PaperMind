@@ -1,10 +1,20 @@
 import React from 'react';
+import ThemeToggle from './ThemeToggle';
 
-export default function Navbar() {
+export default function Navbar({ currentView = 'landing', onNavigate }) {
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate('landing');
+  };
+
+  const handleGetStartedClick = () => {
+    if (onNavigate) onNavigate('upload');
+  };
+
   return (
     <header className="navbar">
       <div className="nav-container">
-        <a href="#" className="nav-brand">
+        <a href="#" className="nav-brand" onClick={handleBrandClick}>
           <div className="brand-logo-wrapper">
             <svg
               className="brand-icon"
@@ -25,15 +35,71 @@ export default function Navbar() {
         </a>
 
         <nav className="nav-links">
-          <a href="#features" className="nav-link">Features</a>
-          <a href="#pipeline" className="nav-link">How it Works</a>
-          <a href="#about" className="nav-link">About</a>
+          <a
+            href="#features"
+            className={`nav-link ${currentView === 'landing' ? 'active' : ''}`}
+            onClick={(e) => {
+              if (currentView !== 'landing' && onNavigate) {
+                e.preventDefault();
+                onNavigate('landing');
+                setTimeout(() => {
+                  const el = document.getElementById('features');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+              }
+            }}
+          >
+            Features
+          </a>
+          <a
+            href="#pipeline"
+            className="nav-link"
+            onClick={(e) => {
+              if (currentView !== 'landing' && onNavigate) {
+                e.preventDefault();
+                onNavigate('landing');
+              }
+            }}
+          >
+            How it Works
+          </a>
+          <a
+            href="#about"
+            className="nav-link"
+            onClick={(e) => {
+              if (currentView !== 'landing' && onNavigate) {
+                e.preventDefault();
+                onNavigate('landing');
+                setTimeout(() => {
+                  const el = document.getElementById('about');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+              }
+            }}
+          >
+            About
+          </a>
         </nav>
 
         <div className="nav-actions">
-          <button className="btn-nav-primary" type="button">
-            Get Started
-          </button>
+          <ThemeToggle />
+          {currentView === 'upload' ? (
+            <button
+              className="btn-nav-secondary"
+              type="button"
+              onClick={() => onNavigate && onNavigate('landing')}
+            >
+              Home
+            </button>
+          ) : (
+            <button
+              className="btn-nav-primary"
+              type="button"
+              onClick={handleGetStartedClick}
+            >
+              Get Started
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Hero() {
+export default function Hero({ onGetStarted }) {
   return (
     <section className="hero-section">
       <div className="hero-glow-bg" />
@@ -21,7 +21,7 @@ export default function Hero() {
         </p>
 
         <div className="hero-cta-group">
-          <button className="btn-primary btn-large" type="button">
+          <button className="btn-primary btn-large" type="button" onClick={onGetStarted}>
             Get Started
             <svg
               className="btn-arrow"
