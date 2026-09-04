@@ -1,3 +1,5 @@
+import time
+
 from backend.gemini_client import client
 
 
@@ -17,9 +19,17 @@ User question:
 {question}
 """
 
-    response = client.models.generate_content(
-        model="gemini-3.6-flash",
-        contents=prompt
-    )
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt
+            )
 
-    return response.text
+            return response.text
+
+        except Exception as e:
+            if "503" in str(e) and attempt < 2:
+                time.sleep(2)
+            else:
+                raise
