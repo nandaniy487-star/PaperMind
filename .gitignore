@@ -1,0 +1,5 @@
+.env
+backend-env/
+backend/chroma_db/
+__pycache__/
+backend/*.pdf
