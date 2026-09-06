@@ -1,20 +1,33 @@
 import React, { useState, useRef } from 'react';
 import { uploadPaper } from '../services/api';
 
-export default function UploadPaper({ onBack, onChat }) {
+export default function UploadPaper({
+  onBack,
+  onChat,
+  onStudyNotes,
+  onMethodology,
+  onResultsConclusion
+}) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successData, setSuccessData] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const formatFileSize = (bytes) => {
     if (!bytes || bytes === 0) return '0 B';
+
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+
+    return (
+      parseFloat((bytes / Math.pow(k, i)).toFixed(2)) +
+      ' ' +
+      sizes[i]
+    );
   };
 
   const formatDate = (timestamp) => {
@@ -38,7 +51,9 @@ export default function UploadPaper({ onBack, onChat }) {
       file.name.toLowerCase().endsWith('.pdf');
 
     if (!isPdf) {
-      setErrorMessage('Please select a valid PDF document (.pdf).');
+      setErrorMessage(
+        'Please select a valid PDF document (.pdf).'
+      );
       setSelectedFile(null);
       return;
     }
@@ -117,6 +132,7 @@ export default function UploadPaper({ onBack, onChat }) {
 
     try {
       const data = await uploadPaper(selectedFile);
+
       setSuccessData(data);
     } catch (error) {
       console.error('Upload failed:', error);
@@ -131,11 +147,12 @@ export default function UploadPaper({ onBack, onChat }) {
         );
       } else if (error.message === 'Network Error') {
         setErrorMessage(
-          'Could not connect to PaperMind backend at http://127.0.0.1:8000. Please verify the FastAPI server is running.'
+          'Could not connect to the PaperMind backend. Please verify that the FastAPI server is running.'
         );
       } else {
         setErrorMessage(
-          error.message || 'An error occurred during paper upload.'
+          error.message ||
+            'An error occurred during paper upload.'
         );
       }
     } finally {
@@ -173,21 +190,24 @@ export default function UploadPaper({ onBack, onChat }) {
             >
               <path
                 fillRule="evenodd"
-                d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l-5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
+                d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
                 clipRule="evenodd"
               />
             </svg>
+
             Back to Home
           </button>
 
           <div className="upload-breadcrumb">
             <span>PaperMind</span>
             <span className="crumb-sep">/</span>
-            <span className="crumb-current">Upload Paper</span>
+            <span className="crumb-current">
+              Upload Paper
+            </span>
           </div>
         </div>
 
-        {/* Page Title & Instructions */}
+        {/* Page Title */}
         <div className="upload-header">
           <div className="upload-badge">
             <span className="badge-pulse" />
@@ -196,20 +216,23 @@ export default function UploadPaper({ onBack, onChat }) {
 
           <h1 className="upload-title">
             Upload Your{' '}
-            <span className="gradient-text">Research Paper</span>
+            <span className="gradient-text">
+              Research Paper
+            </span>
           </h1>
 
           <p className="upload-subtitle">
-            Upload an academic publication in PDF format. The backend extracts
-            text, chunks it with overlap, generates dense vector embeddings,
+            Upload an academic publication in PDF format.
+            The backend extracts text, chunks it with
+            overlap, generates dense vector embeddings,
             and stores them in ChromaDB.
           </p>
         </div>
 
-        {/* Upload Card Area */}
+        {/* Upload Card */}
         <div className="upload-card">
 
-          {/* If upload succeeded, display success summary card */}
+          {/* SUCCESS VIEW */}
           {successData ? (
             <div className="upload-success-view">
 
@@ -231,19 +254,23 @@ export default function UploadPaper({ onBack, onChat }) {
 
               <div className="success-text-content">
                 <h3 className="success-title">
-                  {successData.message || 'Upload Complete!'}
+                  {successData.message ||
+                    'Upload Complete!'}
                 </h3>
 
                 <p className="success-subtext">
-                  Your research paper is now indexed and stored in ChromaDB,
-                  ready for contextual AI inquiries.
+                  Your research paper is now indexed and
+                  stored in ChromaDB, ready for contextual
+                  AI inquiries.
                 </p>
               </div>
 
               <div className="success-meta-grid">
 
                 <div className="meta-stat-card">
-                  <span className="stat-label">Document</span>
+                  <span className="stat-label">
+                    Document
+                  </span>
 
                   <strong
                     className="stat-value text-ellipsis"
@@ -254,7 +281,9 @@ export default function UploadPaper({ onBack, onChat }) {
                 </div>
 
                 <div className="meta-stat-card highlight-stat">
-                  <span className="stat-label">Chunks Created</span>
+                  <span className="stat-label">
+                    Chunks Created
+                  </span>
 
                   <strong className="stat-value">
                     {successData.chunks_created}
@@ -262,7 +291,9 @@ export default function UploadPaper({ onBack, onChat }) {
                 </div>
 
                 <div className="meta-stat-card">
-                  <span className="stat-label">Vector Store</span>
+                  <span className="stat-label">
+                    Vector Store
+                  </span>
 
                   <strong className="stat-value stat-status">
                     ChromaDB Indexed
@@ -271,10 +302,10 @@ export default function UploadPaper({ onBack, onChat }) {
 
               </div>
 
-              {/* Success Actions */}
+              {/* SUCCESS ACTIONS */}
               <div className="success-actions">
 
-                {/* NEW: Chat with Research Paper */}
+                {/* Chat */}
                 <button
                   type="button"
                   className="btn-upload-submit"
@@ -292,9 +323,77 @@ export default function UploadPaper({ onBack, onChat }) {
                     <path d="M12 11h.01" />
                     <path d="M16 11h.01" />
                   </svg>
+
                   Chat with Research Paper
                 </button>
 
+                {/* Study Notes */}
+                <button
+                  type="button"
+                  className="btn-upload-submit"
+                  onClick={onStudyNotes}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="btn-icon"
+                  >
+                    <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
+                    <path d="M8 8h8" />
+                    <path d="M8 12h8" />
+                    <path d="M8 16h5" />
+                  </svg>
+
+                  Generate Study Notes
+                </button>
+
+                {/* Methodology */}
+                <button
+                  type="button"
+                  className="btn-upload-submit"
+                  onClick={onMethodology}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="btn-icon"
+                  >
+                    <path d="M4 4h16v16H4z" />
+                    <path d="M8 8h8" />
+                    <path d="M8 12h8" />
+                    <path d="M8 16h5" />
+                  </svg>
+
+                  Analyze Methodology
+                </button>
+
+                {/* Results & Conclusion */}
+                <button
+                  type="button"
+                  className="btn-upload-submit"
+                  onClick={onResultsConclusion}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="btn-icon"
+                  >
+                    <path d="M4 4h16v16H4z" />
+                    <path d="M8 8h8" />
+                    <path d="M8 12h8" />
+                    <path d="M8 16h5" />
+                  </svg>
+
+                  Results &amp; Conclusion
+                </button>
+
+                {/* Upload Another */}
                 <button
                   type="button"
                   className="btn-upload-submit"
@@ -309,11 +408,18 @@ export default function UploadPaper({ onBack, onChat }) {
                   >
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
+                    <line
+                      x1="12"
+                      y1="3"
+                      x2="12"
+                      y2="15"
+                    />
                   </svg>
+
                   Upload Another Paper
                 </button>
 
+                {/* Home */}
                 <button
                   type="button"
                   className="btn-cancel"
@@ -326,7 +432,7 @@ export default function UploadPaper({ onBack, onChat }) {
             </div>
           ) : (
             <>
-              {/* Dropzone */}
+              {/* DROPZONE */}
               <div
                 className={`dropzone ${
                   isDragging ? 'dropzone-active' : ''
@@ -340,13 +446,15 @@ export default function UploadPaper({ onBack, onChat }) {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onClick={() =>
-                  !isLoading && fileInputRef.current?.click()
+                  !isLoading &&
+                  fileInputRef.current?.click()
                 }
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (
-                    (e.key === 'Enter' || e.key === ' ') &&
+                    (e.key === 'Enter' ||
+                      e.key === ' ') &&
                     !isLoading
                   ) {
                     fileInputRef.current?.click();
@@ -375,7 +483,12 @@ export default function UploadPaper({ onBack, onChat }) {
                     >
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                       <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
+                      <line
+                        x1="12"
+                        y1="3"
+                        x2="12"
+                        y2="15"
+                      />
                     </svg>
                   )}
                 </div>
@@ -401,7 +514,7 @@ export default function UploadPaper({ onBack, onChat }) {
                 </div>
               </div>
 
-              {/* Validation or API Error Banner */}
+              {/* ERROR */}
               {errorMessage && (
                 <div className="alert-banner alert-error">
                   <svg
@@ -411,7 +524,7 @@ export default function UploadPaper({ onBack, onChat }) {
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 001.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -423,7 +536,7 @@ export default function UploadPaper({ onBack, onChat }) {
                 </div>
               )}
 
-              {/* Selected File Details Card */}
+              {/* SELECTED FILE */}
               {selectedFile && (
                 <div className="file-info-card">
                   <div className="file-info-header">
@@ -438,8 +551,18 @@ export default function UploadPaper({ onBack, onChat }) {
                       >
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                         <polyline points="14 2 14 8 20 8" />
-                        <line x1="16" y1="13" x2="8" y2="13" />
-                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line
+                          x1="16"
+                          y1="13"
+                          x2="8"
+                          y2="13"
+                        />
+                        <line
+                          x1="16"
+                          y1="17"
+                          x2="8"
+                          y2="17"
+                        />
                         <polyline points="10 9 9 9 8 9" />
                       </svg>
                     </div>
@@ -455,7 +578,9 @@ export default function UploadPaper({ onBack, onChat }) {
 
                         <span
                           className={`file-status-tag ${
-                            isLoading ? 'tag-indexing' : ''
+                            isLoading
+                              ? 'tag-indexing'
+                              : ''
                           }`}
                         >
                           {isLoading
@@ -466,16 +591,26 @@ export default function UploadPaper({ onBack, onChat }) {
 
                       <div className="file-meta-row">
                         <span className="meta-item">
-                          Size: {formatFileSize(selectedFile.size)}
+                          Size:{' '}
+                          {formatFileSize(
+                            selectedFile.size
+                          )}
                         </span>
 
-                        <span className="meta-dot">•</span>
+                        <span className="meta-dot">
+                          •
+                        </span>
 
                         <span className="meta-item">
-                          Modified: {formatDate(selectedFile.lastModified)}
+                          Modified:{' '}
+                          {formatDate(
+                            selectedFile.lastModified
+                          )}
                         </span>
 
-                        <span className="meta-dot">•</span>
+                        <span className="meta-dot">
+                          •
+                        </span>
 
                         <span className="meta-item">
                           Target: /upload-paper
@@ -500,32 +635,39 @@ export default function UploadPaper({ onBack, onChat }) {
                         </svg>
                       </button>
                     )}
+
                   </div>
                 </div>
               )}
 
-              {/* Ingestion in progress helper notice */}
+              {/* LOADING NOTICE */}
               {isLoading && (
                 <div className="loading-stage-notice">
                   <div className="pulse-spinner" />
 
                   <div className="loading-stage-text">
-                    <strong>Processing Research Paper...</strong>
+                    <strong>
+                      Processing Research Paper...
+                    </strong>
 
                     <span>
-                      Extracting text via PyMuPDF, computing dense embeddings,
-                      and updating ChromaDB. Please don't refresh.
+                      Extracting text via PyMuPDF,
+                      computing dense embeddings, and
+                      updating ChromaDB. Please don't
+                      refresh.
                     </span>
                   </div>
                 </div>
               )}
 
-              {/* Action Row */}
+              {/* ACTIONS */}
               <div className="upload-actions">
                 <button
                   type="button"
                   className={`btn-upload-submit ${
-                    !selectedFile || isLoading ? 'btn-disabled' : ''
+                    !selectedFile || isLoading
+                      ? 'btn-disabled'
+                      : ''
                   }`}
                   disabled={!selectedFile || isLoading}
                   onClick={handleUploadClick}
@@ -546,8 +688,14 @@ export default function UploadPaper({ onBack, onChat }) {
                       >
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="17 8 12 3 7 8" />
-                        <line x1="12" y1="3" x2="12" y2="15" />
+                        <line
+                          x1="12"
+                          y1="3"
+                          x2="12"
+                          y2="15"
+                        />
                       </svg>
+
                       Upload &amp; Analyze
                     </>
                   )}
@@ -564,9 +712,10 @@ export default function UploadPaper({ onBack, onChat }) {
               </div>
             </>
           )}
+
         </div>
 
-        {/* Pipeline Information Preview */}
+        {/* Pipeline Information */}
         <div className="pipeline-preview">
           <h4 className="pipeline-title">
             Backend RAG Pipeline Process:
@@ -578,9 +727,13 @@ export default function UploadPaper({ onBack, onChat }) {
               <div className="step-num">1</div>
 
               <div className="step-text">
-                <strong>PyMuPDF Text Extraction</strong>
+                <strong>
+                  PyMuPDF Text Extraction
+                </strong>
+
                 <span>
-                  Directly processes PDF streams and extracts full paper content.
+                  Directly processes PDF streams and
+                  extracts full paper content.
                 </span>
               </div>
             </div>
@@ -589,9 +742,13 @@ export default function UploadPaper({ onBack, onChat }) {
               <div className="step-num">2</div>
 
               <div className="step-text">
-                <strong>Chunking &amp; MiniLM Vectors</strong>
+                <strong>
+                  Chunking &amp; MiniLM Vectors
+                </strong>
+
                 <span>
-                  1000-character windows embedded into ChromaDB with 384 dimensions.
+                  1000-character windows embedded into
+                  ChromaDB with 384 dimensions.
                 </span>
               </div>
             </div>
@@ -600,9 +757,13 @@ export default function UploadPaper({ onBack, onChat }) {
               <div className="step-num">3</div>
 
               <div className="step-text">
-                <strong>Ready for Gemini 3.6</strong>
+                <strong>
+                  Ready for Gemini 3.6
+                </strong>
+
                 <span>
-                  Indexed vectors are primed for semantic similarity search &amp; RAG answers.
+                  Indexed vectors are primed for semantic
+                  similarity search &amp; RAG answers.
                 </span>
               </div>
             </div>
