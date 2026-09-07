@@ -26,7 +26,7 @@ export default function ChatPaper({ onBack }) {
 
     try {
       // Send question to the PaperMind backend
-      const response = await askPaper(trimmedQuestion, paperId);;
+      const response = await askPaper(trimmedQuestion, paperId);
 
       // Add AI answer to the chat
       setMessages((previousMessages) => [

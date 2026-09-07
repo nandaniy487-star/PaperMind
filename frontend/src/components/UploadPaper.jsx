@@ -326,154 +326,138 @@ localStorage.setItem('paperChunks', data.chunks_created);
 
               </div>
 
-              {/* SUCCESS ACTIONS */}
-              <div className="success-actions">
+              {/* SUCCESS ACTIONS - 5 CORE RESEARCH ACTIONS GRID */}
+              <div className="success-feature-section">
+                <span className="success-feature-heading">
+                  Open in Research Workspace
+                </span>
 
-                {/* Chat */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={onChat}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                <div className="success-feature-grid">
+                  {/* Chat */}
+                  <button
+                    type="button"
+                    className="btn-feature-card"
+                    onClick={onChat}
                   >
-                    <path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-4.5-1.3L3 20l1.3-4.5A8.38 8.38 0 013 11.5a8.5 8.5 0 1118 0z" />
-                    <path d="M8 11h.01" />
-                    <path d="M12 11h.01" />
-                    <path d="M16 11h.01" />
-                  </svg>
+                    <div className="feature-card-icon-box">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                        <path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-4.5-1.3L3 20l1.3-4.5A8.38 8.38 0 013 11.5a8.5 8.5 0 1118 0z" />
+                        <path d="M8 11h.01" />
+                        <path d="M12 11h.01" />
+                        <path d="M16 11h.01" />
+                      </svg>
+                    </div>
+                    <div className="feature-card-content">
+                      <strong className="feature-card-title">Chat Paper</strong>
+                      <span className="feature-card-desc">Ask grounded questions with RAG</span>
+                    </div>
+                    <span className="feature-card-arrow">→</span>
+                  </button>
 
-                  Chat with Research Paper
-                </button>
-
-                {/* Study Notes */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={onStudyNotes}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                  {/* Study Notes */}
+                  <button
+                    type="button"
+                    className="btn-feature-card"
+                    onClick={onStudyNotes}
                   >
-                    <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
-                    <path d="M8 8h8" />
-                    <path d="M8 12h8" />
-                    <path d="M8 16h5" />
-                  </svg>
+                    <div className="feature-card-icon-box">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                        <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
+                        <path d="M8 8h8" />
+                        <path d="M8 12h8" />
+                        <path d="M8 16h5" />
+                      </svg>
+                    </div>
+                    <div className="feature-card-content">
+                      <strong className="feature-card-title">Study Notes</strong>
+                      <span className="feature-card-desc">Generate structured revisions</span>
+                    </div>
+                    <span className="feature-card-arrow">→</span>
+                  </button>
 
-                  Generate Study Notes
-                </button>
-
-                {/* Methodology */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={onMethodology}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                  {/* Methodology */}
+                  <button
+                    type="button"
+                    className="btn-feature-card"
+                    onClick={onMethodology}
                   >
-                    <path d="M4 4h16v16H4z" />
-                    <path d="M8 8h8" />
-                    <path d="M8 12h8" />
-                    <path d="M8 16h5" />
-                  </svg>
+                    <div className="feature-card-icon-box">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                        <path d="M10 2v7.31M14 9.3V1.99M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0" />
+                        <path d="M5.52 16h12.96" />
+                      </svg>
+                    </div>
+                    <div className="feature-card-content">
+                      <strong className="feature-card-title">Methodology</strong>
+                      <span className="feature-card-desc">Analyze techniques &amp; setup</span>
+                    </div>
+                    <span className="feature-card-arrow">→</span>
+                  </button>
 
-                  Analyze Methodology
-                </button>
-
-                {/* Results & Conclusion */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={onResultsConclusion}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                  {/* Results & Conclusion */}
+                  <button
+                    type="button"
+                    className="btn-feature-card"
+                    onClick={onResultsConclusion}
                   >
-                    <path d="M4 4h16v16H4z" />
-                    <path d="M8 8h8" />
-                    <path d="M8 12h8" />
-                    <path d="M8 16h5" />
-                  </svg>
+                    <div className="feature-card-icon-box">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                        <path d="M3 3v18h18" />
+                        <path d="m19 9-5 5-4-4-3 3" />
+                      </svg>
+                    </div>
+                    <div className="feature-card-content">
+                      <strong className="feature-card-title">Results &amp; Conclusion</strong>
+                      <span className="feature-card-desc">Review key metrics &amp; findings</span>
+                    </div>
+                    <span className="feature-card-arrow">→</span>
+                  </button>
 
-                  Results &amp; Conclusion
-                </button>
-
-                {/* Flashcards */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={onFlashcards}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                  {/* Flashcards */}
+                  <button
+                    type="button"
+                    className="btn-feature-card highlight-flashcards"
+                    onClick={onFlashcards}
                   >
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                    <path d="M7 8h10" />
-                    <path d="M7 12h6" />
-                    <path d="M7 16h8" />
-                  </svg>
+                    <div className="feature-card-icon-box">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="M7 8h10" />
+                        <path d="M7 12h6" />
+                        <path d="M7 16h8" />
+                      </svg>
+                    </div>
+                    <div className="feature-card-content">
+                      <strong className="feature-card-title">Flashcards</strong>
+                      <span className="feature-card-desc">Active recall study cards</span>
+                    </div>
+                    <span className="feature-card-arrow">→</span>
+                  </button>
+                </div>
 
-                  Generate Flashcards
-                </button>
-
-                {/* Upload Another */}
-                <button
-                  type="button"
-                  className="btn-upload-submit"
-                  onClick={handleUploadAnother}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="btn-icon"
+                {/* Secondary Actions */}
+                <div className="success-secondary-actions">
+                  <button
+                    type="button"
+                    className="btn-secondary-action"
+                    onClick={handleUploadAnother}
                   >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line
-                      x1="12"
-                      y1="3"
-                      x2="12"
-                      y2="15"
-                    />
-                  </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Upload Another Paper
+                  </button>
 
-                  Upload Another Paper
-                </button>
-
-                {/* Home */}
-                <button
-                  type="button"
-                  className="btn-cancel"
-                  onClick={onBack}
-                >
-                  Return to Home
-                </button>
-
+                  <button
+                    type="button"
+                    className="btn-secondary-action btn-ghost"
+                    onClick={onBack}
+                  >
+                    Return to Home
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
@@ -542,16 +526,20 @@ localStorage.setItem('paperChunks', data.chunks_created);
                 <div className="dropzone-text-group">
                   <h3 className="dropzone-prompt">
                     {isLoading
-                      ? 'Processing and indexing document...'
+                      ? 'Processing research paper...'
                       : isDragging
                       ? 'Drop your PDF here'
                       : 'Drag and drop your PDF research paper'}
                   </h3>
 
                   <p className="dropzone-subprompt">
-                    {isLoading
-                      ? 'Please wait while text is extracted and embeddings are computed'
-                      : 'or click to browse from your computer'}
+                    {isLoading ? (
+                      'Please wait while your document is being processed'
+                    ) : (
+                      <>
+                        or <span className="highlight-browse">browse from your computer</span>
+                      </>
+                    )}
                   </p>
 
                   <div className="dropzone-meta-pill">
@@ -570,7 +558,7 @@ localStorage.setItem('paperChunks', data.chunks_created);
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 001.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 001.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -658,8 +646,8 @@ localStorage.setItem('paperChunks', data.chunks_created);
                           •
                         </span>
 
-                        <span className="meta-item">
-                          Target: /upload-paper
+                        <span className="meta-item meta-pill-doc">
+                          PDF Document
                         </span>
                       </div>
                     </div>
@@ -689,18 +677,15 @@ localStorage.setItem('paperChunks', data.chunks_created);
               {/* LOADING NOTICE */}
               {isLoading && (
                 <div className="loading-stage-notice">
-                  <div className="pulse-spinner" />
+                  <div className="spinner-orbit" />
 
                   <div className="loading-stage-text">
                     <strong>
-                      Processing Research Paper...
+                      Processing your research paper...
                     </strong>
 
-                    <span>
-                      Extracting text via PyMuPDF,
-                      computing dense embeddings, and
-                      updating ChromaDB. Please don't
-                      refresh.
+                    <span className="loading-stage-sequence">
+                      Extracting text &bull; Creating embeddings &bull; Indexing in ChromaDB
                     </span>
                   </div>
                 </div>
