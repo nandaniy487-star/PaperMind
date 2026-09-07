@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { uploadPaper } from '../services/api';
 
 export default function UploadPaper({
@@ -15,6 +15,20 @@ export default function UploadPaper({
   const [successData, setSuccessData] = useState(null);
 
   const fileInputRef = useRef(null);
+  useEffect(() => {
+  const paperId = localStorage.getItem('paperId');
+  const paperFilename = localStorage.getItem('paperFilename');
+  const paperChunks = localStorage.getItem('paperChunks');
+
+  if (paperId && paperFilename) {
+    setSuccessData({
+      paper_id: paperId,
+      filename: paperFilename,
+      chunks_created: paperChunks || 'Indexed',
+      message: 'Research paper is ready!'
+    });
+  }
+}, []);
 
   const formatFileSize = (bytes) => {
     if (!bytes || bytes === 0) return '0 B';
@@ -131,10 +145,15 @@ export default function UploadPaper({
     setSuccessData(null);
 
     try {
-      const data = await uploadPaper(selectedFile);
+  const data = await uploadPaper(selectedFile);
 
-      setSuccessData(data);
-    } catch (error) {
+  // Remember the currently uploaded paper
+  localStorage.setItem('paperId', data.paper_id);
+localStorage.setItem('paperFilename', data.filename);
+localStorage.setItem('paperChunks', data.chunks_created);
+
+  setSuccessData(data);
+}catch (error) {
       console.error('Upload failed:', error);
 
       if (error.response?.data?.detail) {
@@ -161,14 +180,18 @@ export default function UploadPaper({
   };
 
   const handleUploadAnother = () => {
-    setSelectedFile(null);
-    setSuccessData(null);
-    setErrorMessage('');
+  setSelectedFile(null);
+  setSuccessData(null);
+  setErrorMessage('');
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
+  localStorage.removeItem('paperId');
+  localStorage.removeItem('paperFilename');
+  localStorage.removeItem('paperChunks');
+
+  if (fileInputRef.current) {
+    fileInputRef.current.value = '';
+  }
+};
 
   return (
     <div className="upload-page">

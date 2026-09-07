@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { askPaper } from '../services/api';
 
 export default function ChatPaper({ onBack }) {
   const [question, setQuestion] = useState('');
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const paperId = localStorage.getItem('paperId');
 
   const handleSend = async () => {
     const trimmedQuestion = question.trim();
@@ -24,17 +25,15 @@ export default function ChatPaper({ onBack }) {
     setIsLoading(true);
 
     try {
-      // Send question to FastAPI backend
-      const response = await axios.post('/api/ask-paper', {
-        question: trimmedQuestion,
-      });
+      // Send question to the PaperMind backend
+      const response = await askPaper(trimmedQuestion, paperId);;
 
       // Add AI answer to the chat
       setMessages((previousMessages) => [
         ...previousMessages,
         {
           role: 'ai',
-          content: response.data.answer,
+          content: response.answer,
         },
       ]);
     } catch (error) {
@@ -77,7 +76,7 @@ export default function ChatPaper({ onBack }) {
             >
               <path
                 fillRule="evenodd"
-                d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l-5.5-5.25a.75.75 0 010-1.08l-5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
+                d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
                 clipRule="evenodd"
               />
             </svg>
@@ -273,6 +272,7 @@ export default function ChatPaper({ onBack }) {
                 strokeWidth="2"
               >
                 <path d="M22 2L11 13" />
+                <path d="M22 2l-11 11" />
                 <path d="M22 2l-7 20-4-9-9-4 20-7z" />
               </svg>
             </button>

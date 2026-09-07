@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { generateResultsConclusion } from '../services/api';
+import { generateStudyNotes } from '../services/api';
 import WorkspaceTabs from './WorkspaceTabs';
 
-export default function ResultsConclusion({ onBack, onNavigate }) {
-  const [results, setResults] = useState('');
+export default function StudyNotes({ onBack, onNavigate }) {
+  const [notes, setNotes] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
@@ -14,22 +14,22 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
   const paperFilename = localStorage.getItem('paperFilename') || 'Uploaded Research Paper';
   const paperChunks = localStorage.getItem('paperChunks');
 
-  const fetchResults = async () => {
+  const fetchNotes = async () => {
     setIsLoading(true);
     setError('');
 
     try {
-      const data = await generateResultsConclusion(paperId);
+      const response = await generateStudyNotes(paperId);
 
-      if (data.results_conclusion) {
-        setResults(data.results_conclusion);
+      if (response.notes) {
+        setNotes(response.notes);
       } else {
-        setError(data.message || 'No results and conclusion synthesis could be generated for this paper.');
+        setError(response.message || 'No study notes could be generated for this paper.');
       }
     } catch (err) {
-      console.error('Error generating results and conclusion:', err);
+      console.error('Error generating study notes:', err);
       setError(
-        'Sorry, we could not generate the results and conclusion analysis. Please make sure your research paper has been uploaded and the backend is running.'
+        'Sorry, we could not generate study notes. Please make sure your research paper has been uploaded and the backend is running.'
       );
     } finally {
       setIsLoading(false);
@@ -37,12 +37,12 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
   };
 
   useEffect(() => {
-    fetchResults();
+    fetchNotes();
   }, [paperId]);
 
   const handleCopy = () => {
-    if (!results) return;
-    navigator.clipboard.writeText(results);
+    if (!notes) return;
+    navigator.clipboard.writeText(notes);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -68,7 +68,7 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
             <span className="crumb-sep">/</span>
             <span>Workspace</span>
             <span className="crumb-sep">/</span>
-            <span className="crumb-current">Results &amp; Conclusion</span>
+            <span className="crumb-current">Study Notes</span>
           </div>
         </div>
 
@@ -76,20 +76,20 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
         <div className="study-notes-header">
           <div className="upload-badge">
             <span className="badge-pulse" />
-            <span>Findings &amp; Synthesis</span>
+            <span>AI Study Assistant</span>
           </div>
 
           <h1 className="study-notes-title">
-            Results &amp; <span className="gradient-text">Conclusion</span>
+            Study <span className="gradient-text">Notes</span>
           </h1>
 
           <p className="study-notes-subtitle">
-            Synthesize key empirical findings, benchmark comparisons, performance outcomes, and final paper conclusions.
+            Comprehensive, structured study notes synthesized from your research paper's core concepts.
           </p>
         </div>
 
         {/* Workspace Quick-Navigation Tabs */}
-        <WorkspaceTabs activeTab="results-conclusion" onNavigate={onNavigate} />
+        <WorkspaceTabs activeTab="study-notes" onNavigate={onNavigate} />
 
         {/* Active Paper Banner with Copy Action */}
         <div className="active-doc-banner">
@@ -119,12 +119,12 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
           </div>
 
           <div className="active-doc-right">
-            {results && !isLoading && (
+            {notes && !isLoading && (
               <button
                 type="button"
                 className={`btn-action-copy ${copied ? 'copied' : ''}`}
                 onClick={handleCopy}
-                title="Copy results and conclusion to clipboard"
+                title="Copy notes to clipboard"
               >
                 {copied ? (
                   <>
@@ -143,7 +143,7 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
-                    <span>Copy Findings</span>
+                    <span>Copy Notes</span>
                   </>
                 )}
               </button>
@@ -156,9 +156,9 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
           {isLoading ? (
             <div className="analysis-state-box">
               <div className="spinner-orbit" />
-              <h3 className="state-title">Synthesizing Results &amp; Conclusions...</h3>
+              <h3 className="state-title">Synthesizing Study Notes...</h3>
               <p className="state-description">
-                Analyzing empirical metrics, comparative benchmarks, scientific claims, and limitations.
+                Analyzing core sections, extracting theoretical foundations, and formatting study concepts.
               </p>
             </div>
           ) : error ? (
@@ -170,16 +170,16 @@ export default function ResultsConclusion({ onBack, onNavigate }) {
                   <line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
               </div>
-              <h3 className="state-title">Unable to Generate Results</h3>
+              <h3 className="state-title">Unable to Generate Notes</h3>
               <p className="state-description">{error}</p>
-              <button type="button" className="btn-secondary" onClick={fetchResults}>
+              <button type="button" className="btn-secondary" onClick={fetchNotes}>
                 Try Again
               </button>
             </div>
           ) : (
             <div className="research-markdown-body">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {results}
+                {notes}
               </ReactMarkdown>
             </div>
           )}
