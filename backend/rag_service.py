@@ -191,3 +191,52 @@ Research paper context:
                 time.sleep(2)
             else:
                 raise
+def generate_flashcards(context):
+    max_context_length = 12000
+    limited_context = context[:max_context_length]
+
+    prompt = f"""
+You are PaperMind, an AI research paper assistant.
+
+Create 10 useful study flashcards from the research paper context
+provided below.
+
+Each flashcard must contain:
+- Question
+- Answer
+
+Rules:
+- Use only information explicitly available in the research paper context.
+- Do not invent information.
+- Questions should focus on important concepts, methodology,
+  algorithms, findings, and technical details.
+- Answers should be concise but informative.
+- Make the flashcards useful for exam preparation and revision.
+- Avoid duplicate questions.
+- Return exactly 10 flashcards.
+- Format each flashcard exactly like this:
+
+Q1: <question>
+A1: <answer>
+
+Q2: <question>
+A2: <answer>
+
+Continue until Q10/A10.
+
+Research paper context:
+{limited_context}
+"""
+
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt
+            )
+            return response.text
+        except Exception as e:
+            if "503" in str(e) and attempt < 2:
+                time.sleep(2)
+            else:
+                raise

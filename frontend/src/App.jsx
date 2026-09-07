@@ -7,6 +7,7 @@ import ChatPaper from './components/ChatPaper';
 import StudyNotes from './components/StudyNotes';
 import Methodology from './components/Methodology';
 import ResultsConclusion from './components/ResultsConclusion';
+import Flashcards from './components/Flashcards';
 import Footer from './components/Footer';
 import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
@@ -37,6 +38,7 @@ export default function App() {
               onStudyNotes={() => setCurrentView('study-notes')}
               onMethodology={() => setCurrentView('methodology')}
               onResultsConclusion={() => setCurrentView('results-conclusion')}
+              onFlashcards={() => setCurrentView('flashcards')}
             />
           ) : currentView === 'chat' ? (
             <ChatPaper
@@ -55,6 +57,11 @@ export default function App() {
             />
           ) : currentView === 'results-conclusion' ? (
             <ResultsConclusion
+              onBack={() => setCurrentView('upload')}
+              onNavigate={setCurrentView}
+            />
+          ) : currentView === 'flashcards' ? (
+            <Flashcards
               onBack={() => setCurrentView('upload')}
               onNavigate={setCurrentView}
             />

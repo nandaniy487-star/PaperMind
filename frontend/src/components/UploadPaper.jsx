@@ -6,7 +6,8 @@ export default function UploadPaper({
   onChat,
   onStudyNotes,
   onMethodology,
-  onResultsConclusion
+  onResultsConclusion,
+  onFlashcards
 }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -414,6 +415,28 @@ localStorage.setItem('paperChunks', data.chunks_created);
                   </svg>
 
                   Results &amp; Conclusion
+                </button>
+
+                {/* Flashcards */}
+                <button
+                  type="button"
+                  className="btn-upload-submit"
+                  onClick={onFlashcards}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="btn-icon"
+                  >
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M7 8h10" />
+                    <path d="M7 12h6" />
+                    <path d="M7 16h8" />
+                  </svg>
+
+                  Generate Flashcards
                 </button>
 
                 {/* Upload Another */}

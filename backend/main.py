@@ -15,7 +15,8 @@ from backend.rag_service import (
     generate_answer,
     generate_study_notes,
     generate_methodology,
-    generate_results_conclusion
+    generate_results_conclusion,
+    generate_flashcards
 )
 
 
@@ -209,4 +210,22 @@ async def results_conclusion(request: PaperRequest):
     return {
         "paper_id": paper_id,
         "results_conclusion": results
+    }
+@app.post("/flashcards")
+async def flashcards(request: PaperRequest):
+
+    paper_id = request.paper_id
+    chunks = get_all_chunks(paper_id)
+
+    if not chunks:
+        return {
+            "message": "Research paper not found."
+        }
+
+    context = "\n\n".join(chunks)
+    flashcards = generate_flashcards(context)
+
+    return {
+        "paper_id": paper_id,
+        "flashcards": flashcards
     }

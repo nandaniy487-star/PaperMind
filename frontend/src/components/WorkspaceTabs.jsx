@@ -37,6 +37,18 @@ export default function WorkspaceTabs({ activeTab, onNavigate }) {
       ),
     },
     {
+      id: 'flashcards',
+      label: 'Flashcards',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="tab-icon">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="M7 8h10" />
+          <path d="M7 12h6" />
+          <path d="M7 16h8" />
+        </svg>
+      ),
+    },
+    {
       id: 'chat',
       label: 'Chat Paper',
       icon: (

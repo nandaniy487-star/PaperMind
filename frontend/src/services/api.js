@@ -83,3 +83,13 @@ export async function generateResultsConclusion(paperId) {
 
   return response.data;
 }
+export async function generateFlashcards(paperId) {
+  const response = await axios.post(
+    `${API_BASE_URL}/flashcards`,
+    {
+      paper_id: paperId,
+    }
+  );
+
+  return response.data;
+}
